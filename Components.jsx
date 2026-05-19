@@ -203,7 +203,7 @@ const Footer = () => (
     </div>
     <div className="pf-footer-bottom">
       <a className="pf-footer-handle" href="https://t.me/danilovmf" target="_blank" rel="noreferrer noopener">@danilovmf</a>
-      <div className="pf-footer-license">© 2026 · CC BY-NC 4.0</div>
+      <div className="pf-footer-license">© gulovvue 2026</div>
     </div>
   </footer>
 );

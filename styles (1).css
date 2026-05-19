@@ -1,0 +1,604 @@
+/* UI Kit · Portfolio landing — local styles built on tokens */
+/* ─── colors_and_type tokens (inlined for standalone build) ─── */
+/* ─────────────────────────────────────────────────────────
+   Recycling Portfolio — Данилов М.Ф.
+   Design tokens: colors + type
+   Inspired by Nothing Studio dark portfolio aesthetic.
+   ───────────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap");
+
+:root {
+  /* ── BASE COLORS ── */
+  --bg:            #1A1A1A;     /* primary page background */
+  --bg-deep:       #0D0D0D;     /* darkest, gallery-mode (Project 04) */
+  --bg-footer:     #111111;     /* footer / sub-cards */
+  --surface:       #222222;     /* cards, drawing wells, technical bg */
+  --surface-2:     #2A2A2A;     /* hover surface */
+  --line:          rgba(255, 255, 255, 0.08);
+  --line-strong:   rgba(255, 255, 255, 0.16);
+
+  --fg:            #F0F0F0;     /* primary text */
+  --fg-2:          #AAAAAA;     /* body text */
+  --fg-3:          #888888;     /* secondary / captions */
+  --fg-4:          #555555;     /* footer mute */
+  --fg-faint:      rgba(255, 255, 255, 0.03); /* huge ghost numerals */
+
+  /* ── PROJECT ACCENTS ── */
+  --accent-domestic: #E8D5B0;   /* 01 — Стойка для растений (cream) */
+  --accent-eco:      #8BFF6E;   /* 02 — Вертикальная ферма (acid green) */
+  --accent-repair:   #FF8C42;   /* 03 — Ремонтная станция (orange) */
+  --accent-art:      #E0DDD6;   /* 04 — Журнальный стенд (paper) */
+
+  /* default accent (overridden per-section) */
+  --accent: var(--accent-domestic);
+
+  /* ── TYPE — FAMILIES ── */
+  --font-display: "Space Grotesk", "Neue Haas Grotesk Display Pro",
+                  "Inter", system-ui, sans-serif;
+  --font-sans:    "Inter", "Neue Haas Grotesk Display Pro",
+                  system-ui, -apple-system, sans-serif;
+  --font-mono:    ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  /* ── TYPE — SCALE ── */
+  --fs-hero:       clamp(80px, 13vw, 220px);
+  --fs-display:    clamp(56px, 7vw, 112px);
+  --fs-h1:         clamp(48px, 5vw, 72px);
+  --fs-h2:         clamp(32px, 3.4vw, 56px);
+  --fs-h3:         28px;
+  --fs-h4:         20px;
+  --fs-body:       17px;
+  --fs-small:      14px;
+  --fs-eyebrow:    11px;
+  --fs-numeral:    clamp(180px, 22vw, 320px);
+
+  --lh-tight:      0.95;
+  --lh-snug:       1.1;
+  --lh-body:       1.65;
+
+  --ls-tight:      -0.03em;
+  --ls-eyebrow:    0.15em;
+  --ls-caps:       0.02em;
+
+  /* ── SPACING ── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 144px;
+
+  --gutter-desktop: 96px;
+  --gutter-mobile:  24px;
+  --container-max:  1280px;
+
+  /* ── RADII ── */
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  30px;        /* image cards in figma */
+  --radius-pill: 999px;
+
+  /* ── ELEVATION (mostly flat — accents instead of shadows) ── */
+  --shadow-soft: 0 1px 0 rgba(255,255,255,0.04) inset;
+  --shadow-pop:  0 24px 60px -20px rgba(0,0,0,0.6);
+
+  /* ── MOTION ── */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:  180ms;
+  --dur-base:  320ms;
+  --dur-slow:  600ms;
+}
+
+/* ── SEMANTIC ELEMENT STYLES ── */
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--fs-h4);
+  line-height: 1.3;
+  color: var(--fg);
+}
+
+.hero-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-hero);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent, var(--fg-3));
+}
+
+.caption {
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  color: var(--fg-3);
+  letter-spacing: var(--ls-caps);
+}
+
+p, .body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-2);
+  text-wrap: pretty;
+}
+
+.numeral-bg {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-numeral);
+  line-height: 0.9;
+  color: var(--fg-faint);
+  letter-spacing: -0.06em;
+  user-select: none;
+  pointer-events: none;
+}
+
+a {
+  color: var(--fg);
+  text-decoration: none;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+a:hover { opacity: 0.7; }
+
+hr, .divider {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: var(--space-8) 0;
+}
+
+
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body { margin: 0; }
+.pf-wrap { max-width: 1280px; margin: 0 auto; padding: 0 var(--gutter-desktop); }
+@media (max-width: 760px) { .pf-wrap { padding: 0 var(--gutter-mobile); } }
+
+/* ── NAV ─────────────────────────────── */
+.pf-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  transition: background var(--dur-base) var(--ease-out),
+              backdrop-filter var(--dur-base) var(--ease-out);
+}
+.pf-nav.is-scrolled {
+  background: rgba(26,26,26,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.pf-nav-inner {
+  max-width: 1280px; margin: 0 auto;
+  padding: 22px var(--gutter-desktop);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pf-logo { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; color: var(--fg); }
+.pf-nav-links { display: flex; gap: 36px; }
+.pf-nav-link { font-size: 13px; color: var(--fg-2); font-weight: 500; }
+.pf-nav-num { color: var(--fg-3); margin-right: 8px; font-family: var(--font-mono); font-size: 11px; }
+
+/* ── HERO ─────────────────────────────── */
+.pf-hero {
+  position: relative; min-height: 100vh;
+  display: grid; grid-template-rows: 1fr auto auto;
+  /* minmax(0, 1fr) prevents the giant h1 from forcing the grid wider
+     than the available content zone (grid children otherwise have
+     min-width: auto = min-content, which is one long word here). */
+  grid-template-columns: minmax(0, 1fr);
+  padding: 140px var(--gutter-desktop) 64px;
+  /* Outer box = inner 1280px content zone + gutter on each side,
+     so hero content lines up with .pf-section-inner */
+  max-width: calc(1280px + 2 * var(--gutter-desktop));
+  margin: 0 auto;
+  overflow: clip; /* safety net — kill any residual horizontal drift */
+}
+.pf-hero > * { min-width: 0; }
+@media (max-width: 760px) {
+  .pf-hero { padding: 140px var(--gutter-mobile) 64px; }
+}
+.pf-hero-eyebrow {
+  position: absolute; top: 96px; left: var(--gutter-desktop);
+  font-family: var(--font-display); font-size: 14px; color: var(--fg-3); letter-spacing: 0.04em;
+}
+@media (max-width: 760px) {
+  .pf-hero-eyebrow { left: var(--gutter-mobile); }
+}
+.pf-hero-title {
+  font-family: var(--font-display); font-weight: 700;
+  color: var(--fg);
+  align-self: center; margin: 0;
+  /* Two-row editorial stagger: ПЕРЕРАБОТКА full-width, ДИЗАЙН indented */
+  display: grid; grid-template-columns: 1fr;
+  overflow-wrap: anywhere;
+}
+.pf-hero-word {
+  display: block;
+  /* Sized so «ПЕРЕРАБОТКА» (longest line) fits the 1280px content
+     zone at every breakpoint — scales with viewport, capped at 180px. */
+  font-size: clamp(56px, 10.5vw, 180px);
+  /* 0.96 prevents the «й» descender accent on ДИЗАЙН colliding with
+     the «А» from ПЕРЕРАБОТКА above. */
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+.pf-hero-word--bot {
+  justify-self: end;
+  text-align: right;
+}
+
+/* ── HERO RULE — four-segment interactive nav ────────────────────────
+   Default: 3px coloured bar split into 4 (one segment per project).
+   On hover/focus: bar grows tall and reveals a mini card for that
+   approach. Cards push «ПЕРЕРАБОТКА» / «ДИЗАЙН» apart vertically. */
+.pf-hero-rule {
+  display: flex; gap: 6px;
+  height: 3px;
+  margin: 18px 0;
+  transition: height .4s var(--ease-out), margin .4s var(--ease-out);
+}
+.pf-hero-title:has(.pf-hero-rule-seg:hover) .pf-hero-rule,
+.pf-hero-title:has(.pf-hero-rule-seg:focus-visible) .pf-hero-rule {
+  height: 132px;
+  margin: 28px 0;
+}
+.pf-hero-rule-seg {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--c);
+  border-radius: 3px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+  transform-origin: left center;
+  animation: pf-hero-seg-in .9s var(--ease-out) backwards;
+  transition: flex .4s var(--ease-out), filter .3s var(--ease-out), border-radius .3s var(--ease-out);
+}
+.pf-hero-rule-seg:nth-child(1) { animation-delay: .15s; }
+.pf-hero-rule-seg:nth-child(2) { animation-delay: .30s; }
+.pf-hero-rule-seg:nth-child(3) { animation-delay: .45s; }
+.pf-hero-rule-seg:nth-child(4) { animation-delay: .60s; }
+@keyframes pf-hero-seg-in {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+.pf-hero-rule-seg:hover,
+.pf-hero-rule-seg:focus-visible { flex: 2.5 1 0; border-radius: 6px; }
+.pf-hero-rule-seg:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+.pf-hero-title:has(.pf-hero-rule-seg:hover) .pf-hero-rule-seg:not(:hover),
+.pf-hero-title:has(.pf-hero-rule-seg:focus-visible) .pf-hero-rule-seg:not(:focus-visible) {
+  filter: saturate(0.55) brightness(0.5);
+}
+
+.pf-hero-rule .seg-card {
+  position: absolute; inset: 0;
+  padding: 14px 18px 16px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 12px;
+  color: #0a0a0a;
+  font-family: var(--font-sans); font-weight: 500;
+  text-transform: none; letter-spacing: 0; line-height: 1.2;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .25s var(--ease-out) .12s, transform .35s var(--ease-out) .08s;
+  pointer-events: none;
+}
+.pf-hero-rule-seg:hover .seg-card,
+.pf-hero-rule-seg:focus-visible .seg-card { opacity: 1; transform: none; }
+.pf-hero-rule .seg-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pf-hero-rule .seg-num { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; }
+.pf-hero-rule .seg-eyebrow { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.6; }
+.pf-hero-rule .seg-title { font-family: var(--font-display); font-size: clamp(15px, 1.4vw, 20px); font-weight: 600; line-height: 1.18; letter-spacing: -0.01em; }
+
+@media (max-width: 760px) {
+  .pf-hero-rule { gap: 4px; margin: 12px 0; }
+  .pf-hero-title:has(.pf-hero-rule-seg:hover) .pf-hero-rule,
+  .pf-hero-title:has(.pf-hero-rule-seg:focus-visible) .pf-hero-rule {
+    height: 108px; margin: 18px 0;
+  }
+  .pf-hero-rule .seg-card { padding: 10px 12px 12px; }
+}
+@media (hover: none) {
+  /* On touch devices :hover sticks awkwardly — open on tap (focus-visible
+     handles keyboard), and keep cards readable by default. */
+  .pf-hero-rule-seg:hover { flex: 1 1 0; }
+}
+.pf-hero-meta {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line);
+  font-size: 14px; color: var(--fg-3); letter-spacing: 0.04em; text-transform: uppercase;
+}
+.pf-hero-quote { color: var(--fg-2); text-transform: none; letter-spacing: 0; font-style: italic; }
+.pf-hero-scroll { margin-top: 40px; font-size: 13px; color: var(--fg-2); letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* ── SECTIONS ─────────────────────────── */
+.pf-section { position: relative; padding: 144px var(--gutter-desktop); overflow: hidden; }
+.pf-section.is-art { background: var(--bg-deep); }
+.pf-section-inner { max-width: 1280px; margin: 0 auto; position: relative; }
+
+.pf-section-head { position: relative; padding-bottom: 64px; }
+.pf-ghost {
+  position: absolute; left: -20px; top: -90px;
+  font-family: var(--font-display); font-weight: 800; font-size: 320px; line-height: 0.85;
+  color: rgba(255,255,255,0.03); letter-spacing: -0.06em; pointer-events: none; user-select: none;
+}
+.pf-section-top { display: flex; justify-content: space-between; align-items: flex-start; position: relative; }
+.pf-section-num { font-family: var(--font-display); font-weight: 700; font-size: 36px; letter-spacing: -0.02em; color: var(--fg); }
+.pf-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+.pf-section-title {
+  position: relative; margin: 64px 0 0;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(48px, 6vw, 96px); line-height: 0.95; letter-spacing: -0.03em; color: var(--fg);
+}
+.pf-section-lede { position: relative; max-width: 640px; margin: 32px 0 0; font-size: 18px; line-height: 1.65; color: var(--fg-2); }
+
+/* ── IMAGE CARDS ──────────────────────── */
+.pf-image-card { position: relative; margin: 0; border-radius: var(--radius-xl); overflow: hidden; background: var(--surface); }
+.pf-image-card.is-bleed { border-radius: 0; margin: 0 calc(-1 * var(--gutter-desktop)); }
+.pf-image-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s var(--ease-out); }
+.pf-image-card:hover img { transform: scale(1.02); }
+.pf-image-placeholder {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  background: repeating-linear-gradient(45deg, #222 0 12px, #1f1f1f 12px 24px);
+  color: var(--fg-3); font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.18em;
+}
+/* Caption — chip on a soft scrim so it stays readable over any image */
+.pf-image-card::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 45%;
+  background: linear-gradient(to top, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.18) 45%, rgba(10,10,10,0) 100%);
+  pointer-events: none; opacity: 0; transition: opacity .3s var(--ease-out);
+}
+.pf-image-card:has(.pf-image-cap)::after { opacity: 1; }
+.pf-image-cap {
+  position: absolute; left: 20px; bottom: 20px;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 9px 14px 9px 12px;
+  background: rgba(20,20,20,0.72);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  color: #fff; letter-spacing: 0.12em; text-transform: uppercase;
+  white-space: nowrap; max-width: calc(100% - 40px); overflow: hidden; text-overflow: ellipsis;
+}
+.pf-image-cap::before {
+  content: ""; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 3px rgba(255,255,255,0.06);
+}
+.pf-slab { height: 3px; margin-bottom: 24px; }
+
+/* ── 2-COLUMN BLOCK ───────────────────── */
+.pf-twocol { display: grid; grid-template-columns: 4fr 6fr; gap: 64px; align-items: start; margin-top: 96px; }
+.pf-twocol.even { grid-template-columns: 1fr 1fr; }
+@media (max-width: 760px) { .pf-twocol, .pf-twocol.even { grid-template-columns: 1fr; gap: 32px; } }
+
+.pf-spec { font-family: var(--font-sans); }
+.pf-spec-title { font-family: var(--font-display); font-size: 28px; font-weight: 600; letter-spacing: -0.01em; color: var(--fg); margin-bottom: 24px; }
+.pf-spec-grid { display: grid; grid-template-columns: 160px 1fr; row-gap: 18px; column-gap: 16px; margin: 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 15px; }
+.pf-spec-grid dt { color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; margin: 0; padding-top: 2px; }
+.pf-spec-grid dd { color: var(--fg); margin: 0; }
+
+/* ── GALLERY ─────────────────────────── */
+.pf-gallery { display: grid; gap: 16px; margin-top: 64px; }
+
+/* ── TECH DRAWINGS ───────────────────── */
+.pf-tech { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 64px; }
+.pf-tech-cell { background: var(--surface); border-radius: 20px; padding: 32px; }
+.pf-tech-art { position: relative; height: 280px; }
+.pf-tech-art svg { width: 100%; height: 100%; }
+.pf-tech-tick { position: absolute; left: 0; bottom: 0; width: 60px; height: 2px; }
+.pf-tech-cap { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); margin-top: 18px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* ── SCENARIOS (linear sketches) ─── */
+.pf-scenarios { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 64px; }
+.pf-scen { background: transparent; border: 1px solid var(--line); border-radius: 20px; padding: 28px; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; }
+.pf-scen-num { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.14em; }
+.pf-scen-label { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--fg); }
+.pf-scen-glyph { height: 56px; border-bottom: 1px solid var(--line); }
+
+/* ── MATERIAL BOARD ──────────────── */
+.pf-material { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 64px; }
+.pf-material-cell { aspect-ratio: 4 / 3; border-radius: 20px; padding: 24px; display: flex; align-items: flex-end; }
+.pf-material-cell .name { font-family: var(--font-display); font-size: 20px; color: var(--fg); }
+
+/* ── FOOTER ──────────────────────── */
+.pf-footer { position: relative; background: var(--bg-footer); padding: 144px var(--gutter-desktop) 32px; border-top: 1px solid var(--line); overflow: hidden; }
+.pf-footer-row { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; font-family: var(--font-display); font-size: 18px; color: var(--fg); padding-bottom: 96px; }
+.pf-footer-row > div:nth-child(2) { text-align: center; color: var(--fg-3); }
+.pf-footer-row > div:nth-child(3) { text-align: right; color: var(--fg-3); }
+/* Giant wordmark bled into the bottom edge as a background graphic.
+   Solid fill (not stroke) so the inner shapes of «Ф» don't double up. */
+.pf-footer-mark {
+  position: absolute;
+  left: 50%; bottom: -0.04em;
+  transform: translateX(-50%);
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(180px, 28vw, 440px);
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: rgba(255,255,255,0.035);
+  white-space: nowrap;
+  user-select: none; pointer-events: none;
+  z-index: 0;
+}
+.pf-footer-bottom { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--fg-4); letter-spacing: 0.14em; text-transform: uppercase; }
+.pf-footer-handle { color: var(--fg-2); text-decoration: none; transition: color .2s var(--ease-out); }
+.pf-footer-handle:hover { color: var(--fg); }
+.pf-footer-license { color: var(--fg-4); }
+
+/* ── ENTRY ANIMATION ─────────────── */
+.pf-fade { opacity: 0; transform: translateY(30px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+.pf-fade.is-in { opacity: 1; transform: none; }
+
+/* ── LIGHTBOX & EXPAND AFFORDANCE ─── */
+.pf-image-card.is-clickable {
+  cursor: zoom-in;
+  border: 0; padding: 0; color: inherit; font: inherit; text-align: left;
+  appearance: none; -webkit-appearance: none;
+}
+.pf-image-card.is-clickable:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 4px;
+}
+.pf-image-expand {
+  position: absolute; top: 16px; right: 16px;
+  width: 36px; height: 36px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(20,20,20,0.72); color: #fff;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.10);
+  opacity: 0; transform: translateY(-4px) scale(0.92);
+  transition: opacity .25s var(--ease-out), transform .25s var(--ease-out);
+  pointer-events: none; z-index: 2;
+}
+.pf-image-card.is-clickable:hover .pf-image-expand,
+.pf-image-card.is-clickable:focus-visible .pf-image-expand {
+  opacity: 1; transform: none;
+}
+
+.pf-lightbox {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(8,8,8,0.94);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  display: flex; align-items: center; justify-content: center;
+  padding: 64px 56px;
+  cursor: zoom-out;
+  animation: pf-lb-fade .25s var(--ease-out);
+}
+@keyframes pf-lb-fade { from { opacity: 0; } to { opacity: 1; } }
+.pf-lightbox-figure {
+  position: relative; max-width: min(1400px, 100%); max-height: 100%;
+  display: flex; flex-direction: column; gap: 16px;
+  margin: 0; cursor: default;
+  animation: pf-lb-pop .3s var(--ease-out);
+}
+@keyframes pf-lb-pop {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.pf-lightbox-figure img {
+  max-width: 100%;
+  max-height: calc(100vh - 160px);
+  object-fit: contain;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+.pf-lightbox-figure figcaption {
+  font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.72);
+  text-transform: uppercase; letter-spacing: 0.14em;
+  text-align: center;
+}
+.pf-lightbox-close {
+  position: fixed; top: 24px; right: 24px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.06); color: #fff;
+  border: 1px solid rgba(255,255,255,0.12);
+  font-size: 24px; line-height: 1; font-family: var(--font-display);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background .2s var(--ease-out), border-color .2s var(--ease-out);
+}
+.pf-lightbox-close:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.24); }
+.pf-lightbox-loading {
+  position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.6); text-transform: uppercase;
+  padding: 6px 14px; border-radius: 999px;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
+  pointer-events: none;
+  animation: pf-lb-pulse 1.4s ease-in-out infinite;
+}
+@keyframes pf-lb-pulse { 0%,100% { opacity: 0.45; } 50% { opacity: 1; } }
+@media (max-width: 760px) {
+  .pf-lightbox { padding: 64px 16px; }
+}
+
+/* ── BLOCK EYEBROW (inside section) ─────────── */
+.pf-block-eyebrow { margin-bottom: 32px; display: inline-block; }
+.pf-block-eyebrow::before { content: ""; display: inline-block; width: 28px; height: 2px; background: var(--accent); vertical-align: middle; margin-right: 14px; transform: translateY(-2px); }
+
+/* ── PERSONA CARD ─────────────────── */
+.pf-persona { position: relative; background: var(--surface); border-radius: 20px; padding: 56px 56px 48px; max-width: 880px; }
+.pf-persona-mark { position: absolute; left: 24px; top: -4px; font-family: var(--font-display); font-weight: 700; font-size: 120px; line-height: 1; color: var(--accent); opacity: 0.5; user-select: none; pointer-events: none; }
+.pf-persona-name { font-family: var(--font-display); font-size: 28px; font-weight: 600; letter-spacing: -0.01em; color: var(--fg); margin-bottom: 18px; }
+.pf-persona-name span { color: var(--fg-3); font-weight: 400; }
+.pf-persona-body { margin: 0; font-size: 18px; line-height: 1.65; color: var(--fg-2); max-width: 720px; }
+
+/* ── HISTORICAL CONTEXT BLOCK ──────── */
+.pf-historical { display: grid; grid-template-columns: 6fr 5fr; gap: 64px; align-items: center; }
+@media (max-width: 760px) { .pf-historical { grid-template-columns: 1fr; gap: 32px; } }
+.pf-historical-text { font-size: 18px; line-height: 1.65; color: var(--fg-2); max-width: 720px; }
+.pf-historical-text p { margin: 0; }
+.pf-historical .pf-image-card { height: 460px; }
+
+/* ── PRINCIPLE LIST ───────────────── */
+.pf-principles { list-style: none; padding: 0; margin: 0; counter-reset: pr; display: grid; gap: 18px; max-width: 880px; }
+.pf-principles li { display: grid; grid-template-columns: 56px 1fr; gap: 18px; align-items: baseline; padding: 18px 0; border-top: 1px solid var(--line); }
+.pf-principles li:last-child { border-bottom: 1px solid var(--line); }
+.pf-principle-num { font-family: var(--font-mono); font-size: 12px; color: var(--accent); letter-spacing: 0.14em; padding-top: 4px; }
+.pf-principle-text { font-size: 18px; line-height: 1.55; color: var(--fg); }
+
+/* ── ANALOG ROW (used in Section 01 approach) ── */
+.pf-analog { display: grid; grid-template-columns: 5fr 6fr; gap: 64px; align-items: center; margin-top: 80px; }
+.pf-analog.is-flip { grid-template-columns: 6fr 5fr; }
+.pf-analog.is-flip .pf-analog-text { order: 2; }
+@media (max-width: 760px) { .pf-analog, .pf-analog.is-flip { grid-template-columns: 1fr; gap: 32px; } .pf-analog.is-flip .pf-analog-text { order: 0; } }
+.pf-analog-source { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 16px; }
+.pf-analog-title { font-family: var(--font-display); font-size: 36px; font-weight: 600; letter-spacing: -0.01em; color: var(--fg); margin: 0 0 18px; line-height: 1.15; }
+.pf-analog-body { font-size: 17px; line-height: 1.65; color: var(--fg-2); margin: 0; }
